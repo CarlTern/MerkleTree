@@ -26,14 +26,15 @@ def buildTree(currentRow,fullTree):
     for index in range(len(currentRow)):
         if (len(currentRow) % 2 is not 0):
             currentRow.append(currentRow[len(currentRow)-1])
-        if (index % 2 is not 0):
-            currentNode = hashlib.sha1(currentRow[index].encode('utf-8'))
-            sibling = hashlib.sha1(currentRow[index+1].encode('utf-8'))
-            node = bytes.fromhex(currentNode + sibling).hexdigest()
+        if (index % 2 is 0):
+            print(index)
+            currentNode = bytes.fromhex(hashlib.sha1(currentRow[index].encode('utf-8')).hexdigest())
+            sibling = bytes.fromhex(hashlib.sha1(currentRow[index+1].encode('utf-8')).hexdigest())
+            node = (currentNode + sibling).hex()
             newRow.append(node)
             print("Row:", node)
-    fullTree.update(newRow)
-    return buildTree(newRow)
+    fullTree.append(newRow)
+    return buildTree(newRow,fullTree)
         
 def getFullNode(rows):
     leaf = rows[int(rows[0])+2]
@@ -60,7 +61,7 @@ if __name__ == "__main__":
     result = []
     rows = getRows(path)
 
-    fullTree = {}
+    fullTree = []
     buildTree = buildTree(rows[2:], fullTree)
 
     fullNode = getFullNode(rows)
