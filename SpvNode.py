@@ -3,7 +3,6 @@ import hashlib
 
 # Obtains all numbers from file. 
 def getNodes(filePath):
-    nodes = []
     try:
         file = open(filePath, "r")
         nodes = file.read().splitlines()
@@ -36,4 +35,4 @@ if __name__ == "__main__":
     result = []
     nodes = getNodes(path)
     root = getRoot(nodes)
-    print("Merkle Root:", root)
+    print(root)
